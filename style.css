@@ -1,0 +1,71 @@
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0; padding: 0; height: 100%; width: 100%;
+  background-color: #000;
+  font-family: 'Montserrat', sans-serif;
+  overflow: hidden;
+  color: white;
+}
+
+.page-section {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+}
+
+.active { display: block !important; }
+
+/* Loader */
+#loader {
+  position: fixed; width: 100%; height: 100%; background: #000;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  z-index: 9999; transition: opacity 1s ease;
+}
+
+.spinner {
+  width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1);
+  border-top: 3px solid #fff; border-radius: 50%;
+  animation: spin 1s linear infinite; margin-bottom: 20px;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Video & Content */
+#bgVideo {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: 1; opacity: 0; transition: opacity 2s ease;
+}
+
+.content {
+  position: relative; z-index: 2; height: 100%;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 0 25px; text-align: center;
+  background: linear-gradient(to bottom, transparent 20%, rgba(0,0,0,0.8) 100%);
+}
+
+.fade-up { opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+.show { opacity: 1 !important; transform: translateY(0) !important; }
+
+.logo-img { width: 130px; margin-bottom: 25px; filter: brightness(0) invert(1); }
+.hero-text { font-size: 24px; letter-spacing: 4px; text-transform: uppercase; }
+
+.start-btn {
+  width: 120px; padding: 12px; background: #fff; color: #000;
+  border: none; border-radius: 4px; font-size: 11px; font-weight: 600;
+  letter-spacing: 2px; cursor: pointer; text-transform: uppercase; margin-top: 20px;
+}
+
+/* Slider */
+.logo-slider { width: 100%; overflow: hidden; position: absolute; bottom: 30px; opacity: 0; transition: opacity 1s ease; }
+.logo-slider-track { display: flex; width: calc(200px * 8); animation: scroll 15s linear infinite; }
+.bottom-logo { width: 120px; margin: 0 30px; filter: brightness(0) invert(1); }
+
+@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }

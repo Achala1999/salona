@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>/* ඇප් එකක් වගේ පෙනුම ලබා දීමට සහ හයිලයිට් වීම් අයින් කිරීමට */
+* {
+  -webkit-tap-highlight-color: transparent; /* Click කරද්දී එන නිල්/අළු පාට අයින් කරයි */
+  -webkit-touch-callout: none; /* Long press menu එක නතර කරයි */
+  user-select: none; /* අකුරු නිල් පාටට highlight වීම නතර කරයි */
+  outline: none; /* Focus බෝඩර් එක අයින් කරයි */
+}
+
+/* Input boxes වලට පමණක් ටයිප් කිරීමට ඉඩ ලබා දීම */
+input, select, textarea {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+/* Click කරාම එන අමතු borders අයින් කිරීමට */
+input:focus, select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+    body, html {
+      margin: 0; padding: 0; height: 100%; width: 100%;
+      background-color: #000;
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+      color: white;
+    }
+
+    #loader {
+      position: fixed;
+      width: 100%; height: 100%;
+      background: #000;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      z-index: 9999;
+      transition: opacity 1s ease;
+    }
+
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top: 3px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    #bgVideo {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      opacity: 0; /* මුලින් හංගලා තියෙන්නේ */
+      transition: opacity 2s ease;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 25px;
+      text-align: center;
+      background: linear-gradient(to bottom, transparent 20%, rgba(0,0,0,0.6) 100%);
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .show { opacity: 1 !important; transform: translateY(0) !important; }
+
+    .logo-img { 
+      width: 130px; 
+      margin-bottom: 25px; 
+      filter: brightness(0) invert(1);
+    }
+
+    .hero-text {
+      font-size: 26px; font-weight: 200;
+      letter-spacing: 4px; margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .sub-text {
+      font-size: 11px; line-height: 1.6; font-weight: 300;
+      max-width: 350px; margin-bottom: 40px;
+      color: rgba(255,255,255,0.7);
+    }
+
+.start-btn {
+  width: 100px; /* පළල 200 සිට 160 දක්වා අඩු කළා */
+  padding: 10px; /* උස (padding) 16 සිට 12 දක්වා අඩු කළා */
+  background: #fff; 
+  color: #000;
+  border: none; 
+  border-radius: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px; /* අකුරු වල ප්‍රමාණයත් 13 සිට 11 දක්වා පොඩි කළා */
+  font-weight: 600;
+  letter-spacing: 2px; 
+  cursor: pointer;
+  text-transform: uppercase; 
+  transition: 0.3s;
+  margin-bottom: 50px;
+}
+
+    .logo-slider {
+      width: 100%;
+      overflow: hidden;
+      position: absolute;
+      bottom: 30px;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .logo-slider-track {
+      display: flex;
+      width: calc(200px * 8);
+      animation: scroll 15s linear infinite;
+    }
+
+    .bottom-logo {
+  width: 140px;
+  height: auto;       /* මේ පේළිය අලුතින් ඇතුළත් කරන්න */
+  margin: 0 40px;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+  object-fit: contain; /* මේ පේළිය අලුතින් ඇතුළත් කරන්න */
+}
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-150px * 4 - 80px * 4)); }
+    }
+
+    @media (max-width: 480px) {
+      .hero-text { font-size: 22px; }
+      .bottom-logo { width: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loader">
+    <div class="spinner"></div>
+    <div style="letter-spacing: 3px; font-size: 10px;">LOADING EXPERIENCE</div>
+  </div>
+
+<video autoplay muted loop playsinline id="bgVideo">
+  <source src="https://res.cloudinary.com/dz0rgdht8/video/upload/demo_mj8aa0.mp4" type="video/mp4">
+</video>
+
+  <div class="content">
+    <img src="https://lh3.googleusercontent.com/d/1i61IYZE49WIdWX_lqMXOzkyVZu0fswMM" class="logo-img fade-up" id="logo">
+    <h1 class="hero-text fade-up" id="hero">YOUR LOOK REIMAGINED</h1>
+    <p class="sub-text fade-up" id="sub">
+      At our salon, beauty isn’t just about how you look — it’s about how you feel.
+We believe every client deserves a fresh perspective, a confident glow, and a look that truly reflects who they are.
+
+With expert care, creativity, and attention to detail, we transform your vision into reality — helping you step out feeling renewed, confident, and beautifully reimagined..
+    </p>
+    <button class="start-btn fade-up" id="btn" onclick="loadMenu()">START</button>
+
+    <div class="logo-slider" id="logo-slider">
+      <div class="logo-slider-track">
+        <img src="https://lh3.googleusercontent.com/d/16QDIDqrVIo0Y2lcGZOGWGWVBmjFV_1C9" class="bottom-logo">
+        <img src="https://lh3.googleusercontent.com/d/1UzOXF2pXD1qZ4r6xs2jd5tusdk6gWwtk" class="bottom-logo">
+        <img src="https://lh3.googleusercontent.com/d/1f8XWGrhWWVWNka45PO9IDZhqXx6GBcmW" class="bottom-logo">
+        <img src="https://lh3.googleusercontent.com/d/1nbYI37r2qKUW0qpmTDr2eE_vIsVVw6Tw" class="bottom-logo">
+        <img src="https://lh3.googleusercontent.com/d/16QDIDqrVIo0Y2lcGZOGWGWVBmjFV_1C9" class="bottom-logo">
+        <img src="https://lh3.googleusercontent.com/d/1UzOXF2pXD1qZ4r6xs2jd5tusdk6gWwtk" class="bottom-logo">
+        <img src="https://lh3.googleusercontent.com/d/1f8XWGrhWWVWNka45PO9IDZhqXx6GBcmW" class="bottom-logo">
+        <img src="https://lh3.googleusercontent.com/d/1nbYI37r2qKUW0qpmTDr2eE_vIsVVw6Tw" class="bottom-logo">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      const video = document.getElementById('bgVideo');
+      const loader = document.getElementById('loader');
+
+      setTimeout(() => {
+        // Loader එක අයින් කිරීම
+        loader.style.opacity = '0';
+        setTimeout(() => { loader.style.display = 'none'; }, 1000);
+        
+        // වීඩියෝ එක පෙන්වීම
+        if(video) video.style.opacity = '1';
+
+        // Animations එකින් එක පෙන්වීම
+        setTimeout(() => { document.getElementById('logo').classList.add('show'); }, 500);
+        setTimeout(() => { document.getElementById('hero').classList.add('show'); }, 800);
+        setTimeout(() => { document.getElementById('sub').classList.add('show'); }, 1100);
+        setTimeout(() => { document.getElementById('btn').classList.add('show'); }, 1400);
+        setTimeout(() => { document.getElementById('logo-slider').style.opacity = '1'; }, 1700);
+      }, 2000);
+    };
+
+    function loadMenu() {
+      google.script.run.withSuccessHandler(function(html) {
+        document.open();
+        document.write(html);
+        document.close();
+      }).getMenuPage();
+    }
+  </script>
+</body>
+</html>
